@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIU International Exam 2025 — Top 100 Passers</title>
+
+<style>
+  body { margin:0; font-family:'Segoe UI', sans-serif; background:#f0f4f8; color:#333; }
+  header { background: linear-gradient(90deg, #0a7d32, #43a047); color:white; display:flex; align-items:center; justify-content:center; padding:20px 40px; gap:20px; flex-wrap:wrap; border-bottom-left-radius:20px; border-bottom-right-radius:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+  header img.logo { width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #fff; }
+  header .header-text { text-align:center; }
+  header h1 { margin:0; font-size:28px; font-weight:700; }
+  header p { margin:5px 0 0 0; font-size:14px; color:#e0e0e0; font-style:italic; }
+  .container { max-width:1000px; margin:40px auto; background:#fff; padding:30px; border-radius:16px; box-shadow:0 8px 25px rgba(0,0,0,0.08); }
+  h2 { text-align:center; margin-bottom:10px; font-size:28px; color:#0a7d32; }
+  .sub { text-align:center; margin-bottom:30px; font-size:14px; color:#666; }
+  table { width:100%; border-collapse:collapse; font-size:14px; border-radius:8px; overflow:hidden; }
+  th, td { padding:14px 12px; text-align:left; border-bottom:1px solid #e0e0e0; }
+  th { background: linear-gradient(90deg, #0a7d32, #66bb6a); color:white; position:sticky; top:0; font-weight:600; }
+  tr:nth-child(even) { background:#f9fdf9; }
+  tr:hover { background:#e8f5e9; }
+  .rank { font-weight:600; color:#0a7d32; }
+  footer { text-align:center; padding:25px; font-size:13px; color:#777; margin-top:40px; background:#f9f9f9; }
+  @media(max-width:700px){
+    header { flex-direction:column; }
+    header h1 { font-size:22px; }
+    header p { font-size:12px; }
+    th, td { font-size:12px; padding:10px; }
+    h2 { font-size:22px; }
+    .sub { font-size:12px; }
+  }
+</style>
+
+</head>
+<body>
+
+<header>
+  <img class="logo" src="ChatGPT Image Nov 30, 2025, 04_47_49 PM.png" alt="MIU Logo">
+  <div class="header-text">
+    <h1>Meridian International University</h1>
+    <p>Official International Academic Excellence Exam 2025 — Top 100 Passers</p>
+  </div>
+</header>
+
+<div class="container">
+  <h2>Top 100 Passers</h2>
+  <div class="sub">Academic Year 2025–2026</div>
+
+  <table id="passersTable">
+    <tr>
+      <th>Rank</th>
+      <th>Student Name</th>
+      <th>Country</th>
+      <th>Score (%)</th>
+    </tr>
+  </table>
+</div>
+
+<footer>
+  © 2025 Meridian International University — Assessment Division
+</footer>
+
+<script>
+// Classmate
+const myClassmate = {name: "Cristine Joy Hael", country: "Philippines", score: 74.5};
+
+// Student pool
+const countries = ["Japan","China","Singapore","Philippines","USA","UK","Australia","Germany","Canada"];
+const firstNames = ["Haruto","Yui","Sakura","Kaito","Rin","Takumi","Aoi","Ren","Hina","Souta","Li","Chen","Wang","Zhang","Liu","Zhao","Sun","Wu","Yang","Xu","Amelia","Ryan","Grace","Marcus","Hui","Kai","Jia","Zhi","Xin","Wei","Juan","Maria","Aiden","Sophia","Ethan","Olivia","Mason","Isabella","Logan","Mia","Lucas","Charlotte","Liam","Emily","Noah","Isla","Oliver","George","Harry","Emma","Jack","Ella","Chloe","Lily"];
+const lastNames = ["Tanaka","Nakamura","Ishikawa","Yamamoto","Sato","Suzuki","Kobayashi","Matsumoto","Mori","Fujimoto","Wei","Xi","Fang","Li","Yang","Lei","Ming","Jia","Hao","Ling","Tan","Lim","Ong","Neo","Ling","Wen","Hui","Rong","Yi","Jie","Santos","Rivera","Marshall","Johnson","Smith","Brown","Davis","Wilson","Miller","Taylor","Anderson","Thomas","Jones","Evans","Clark","Walker","Hall","Scott","Adams"];
+
+// Generate unique students excluding classmate
+function generateStudents(count){
+  const students = [];
+  const usedNames = new Set([myClassmate.name]);
+  while(students.length < count){
+    const first = firstNames[Math.floor(Math.random()*firstNames.length)];
+    const last = lastNames[Math.floor(Math.random()*lastNames.length)];
+    const fullName = first + " " + last;
+    if(!usedNames.has(fullName)){
+      usedNames.add(fullName);
+      const country = countries[Math.floor(Math.random()*countries.length)];
+      const score = +(Math.random() * 15 + 75).toFixed(2); // 75–90
+      students.push({name: fullName, country, score});
+    }
+  }
+  return students;
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  const table = document.getElementById("passersTable");
+  let students = generateStudents(99);
+
+  // Include classmate
+  students.push(myClassmate);
+
+  // Sort all students by score descending
+  students.sort((a,b)=>b.score - a.score);
+
+  // Move classmate to rank 89
+  const classmateIndex = students.findIndex(s=>s.name===myClassmate.name);
+  const removed = students.splice(classmateIndex,1);
+  students.splice(88,0,removed[0]); // index 88 = rank 89
+
+  // Fill table
+  students.forEach((student,index)=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td class="rank">${index+1}</td>
+                    <td>${student.name}</td>
+                    <td>${student.country}</td>
+                    <td>${student.score.toFixed(2)}</td>`;
+    table.appendChild(tr);
+  });
+});
+</script>
+
+</body>
+</html>
